@@ -37,6 +37,8 @@ namespace RestSharpMain.Test
 
             response.Should().NotBeNull();
 
+            response.FirstOrDefault().Name.Should().Be("Keys");
+
 
         }
     }
