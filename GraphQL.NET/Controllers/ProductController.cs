@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GraphQLProductApp.Controllers;
 
 [ApiController]
-//[Authorize]
+[Authorize]
 [Route("[controller]")]
 public class ProductController : BaseController
 {

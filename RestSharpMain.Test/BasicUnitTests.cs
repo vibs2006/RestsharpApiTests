@@ -9,7 +9,7 @@ using NuGet.Frameworks;
 
 namespace RestSharpMain.Test
 {
-    public class BasicUnitTests
+    public class BasicUnitTests : BasicTests
     {
         private readonly ITestOutputHelper _outputHelper;
 
@@ -18,16 +18,32 @@ namespace RestSharpMain.Test
             this._outputHelper = outputHelper;
         }
         [Fact]
-        public async Task RestClient_InitialTest_ReturnsResponse()
-        {
-            var restOptions = new RestClientOptions { 
-            BaseUrl = new Uri("https://localhost:5001"),
-            RemoteCertificateValidationCallback = (sender,certificate,policy,errors) => true
-            };
+        public async Task GetAllComponents_Tests_Unauthenticated_Returns_Valid()
+        {            
 
-            var client = new RestClient(restOptions);
+            var client = new RestClient(RestClientOptions);
 
             var request = new RestRequest("Components/GetAllComponents");
+
+            var response = await client.GetAsync<List<Components>>(request);
+
+            _outputHelper.WriteLine(JsonConvert.SerializeObject(response, Formatting.Indented));
+
+            Assert.NotNull(response);
+
+            response.Should().NotBeNull();
+
+            response.FirstOrDefault().Name.Should().Be("Keys");
+
+
+        }
+
+        [Fact]
+        public async Task GetAllProducts_Tests_Unauthenticated_Returns_Valid()
+        {
+            var client = new RestClient(RestClientOptions);
+
+            var request = new RestRequest("Product/GetProducts");
 
             var response = await client.GetAsync<List<Components>>(request);
 
