@@ -18,9 +18,13 @@ namespace RestSharpMain.Test
         {
             if (inputObject is null) return;
 
-            if (inputObject.GetType().IsClass)
+            if (inputObject.GetType().IsClass || inputObject.GetType().IsArray)
             {
                 output.WriteLine(JsonConvert.SerializeObject(inputObject, formatting)); 
+            }
+            else if (inputObject is string)
+            {
+                output.WriteLine(inputObject.ToString());
             }
         }
 
